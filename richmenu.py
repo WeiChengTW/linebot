@@ -37,7 +37,7 @@ try:
     print(f"Rich Menu created. rich_menu_id: {rich_menu_id}")
 
     # 上傳 Rich Menu 圖片
-    with open("C:/xampp/htdocs/linebot/richmenu.png", "rb") as f:
+    with open("richmenu.png", "rb") as f:
         line_bot_api.set_rich_menu_image(rich_menu_id, "image/png", f)
         print("Rich Menu image uploaded.")
 
