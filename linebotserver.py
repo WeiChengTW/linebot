@@ -78,10 +78,7 @@ def handle_postback(event):  # 當點選 rich menu 的按鈕後會觸發
         # 取得使用者 user_id
         user_id = event.source.user_id
         # 將 user_id 加入 URL 中
-        url = (
-            "https://1738-61-218-122-231.ngrok-free.app/linebot/search.html?user_id="
-            + user_id
-        )
+        url = "https://34.81.200.75/linebot/search.html?user_id=" + user_id
 
         message = TemplateSendMessage(
             alt_text="前往頁面",
