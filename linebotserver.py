@@ -163,4 +163,4 @@ if __name__ == "__main__":
         "/etc/letsencrypt/live/weichang.ddns.net/fullchain.pem",
         "/etc/letsencrypt/live/weichang.ddns.net/privkey.pem",
     )
-    app.run(host="0.0.0.0", port=25565, ssl_context=context)
+    app.run(host="0.0.0.0", port=8000, ssl_context=context)
