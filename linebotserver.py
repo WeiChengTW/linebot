@@ -78,15 +78,17 @@ def handle_postback(event):  # 當點選 rich menu 的按鈕後會觸發
         # 取得使用者 user_id
         user_id = event.source.user_id
         # 將 user_id 加入 URL 中
-        url = "https://34.81.200.75/linebot/search.html?user_id=" + user_id
+        url = "https://weichang.ddns.net:443/linebot/search.html?user_id=" + user_id
 
         message = TemplateSendMessage(
-            alt_text="前往頁面",
+            alt_text="前往網頁",
             template=ButtonsTemplate(
                 title="地址輸入",
                 text="請點選下方按鈕輸入地址",  # 顯示在按鈕上方的訊息文字
                 actions=[
-                    URIAction(label="前往頁面", uri=url)  # 按鈕名稱  # 點擊後導向的網址
+                    URIAction(
+                        label="前往填寫頁面", uri=url  # 按鈕名稱  # 點擊後導向的網址
+                    )
                 ],
             ),
         )
@@ -107,17 +109,17 @@ def echo(event):
         if stt[0:3] in addr:  # 若輸入文字的第一個字在城市清單中，視為地址輸入完成
             line_bot_api.reply_message(event.reply_token, TextSendMessage("輸入完成"))
 
-            sql = f"""UPDATE userinformation SET addr ='{stt}' WHERE lineid ='{user_id}';"""  # 更新地址
+            sql = f"""UPDATE `userinformation` SET `addr` ='{stt}' WHERE `lineid` ='{user_id}';"""  # 更新地址
             insert(sql)
-        elif stt == "查詢個人資料":
+
+        elif stt == "查詢個人資料":  # 若使用者輸入 "查詢個人資料"
             # 查詢更新後的資料
             text = ""
-            sql = (
-                f"""SELECT name, addr FROM userinformation WHERE lineid ='{user_id}';"""
-            )
+            sql = f"""SELECT `name`, `addr` FROM `userinformation` WHERE `lineid` ='{user_id}';"""
             print(select(sql))
             text = (
-                "姓名："
+                text
+                + "姓名："
                 + select(sql)[0].split(" ", 1)[0]
                 + "\n"
                 + "地址："
@@ -128,7 +130,7 @@ def echo(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage("輸入地址"))
 
             # 新使用者將 user_id 和名字 stt 寫進資料庫
-            sql = f"""INSERT INTO userinformation(`lineid`, `name`, `addr`) VALUES ('{user_id}', '{stt}', '');"""
+            sql = f"""INSERT INTO `userinformation`(`lineid`, `name`, `addr`) VALUES ('{user_id}', '{stt}', '');"""
             insert(sql)
 
 
@@ -163,4 +165,4 @@ if __name__ == "__main__":
         "/etc/letsencrypt/live/weichang.ddns.net/fullchain.pem",
         "/etc/letsencrypt/live/weichang.ddns.net/privkey.pem",
     )
-    app.run(host="0.0.0.0", port=8000, ssl_context=context)
+    app.run(host="0.0.0.0", port=25565, ssl_context=context)
