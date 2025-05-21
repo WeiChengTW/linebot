@@ -52,7 +52,7 @@ line_bot_api = LineBotApi(
 handler = WebhookHandler(
     "11882e6d285791298ae7897a1445ac3c"
 )  # 初始化 Webhook 處理器並設定 Channel Secret
-sql_connect("localhost", 3306, "root", "1234", "city")
+sql_connect("localhost", 3306, "william", "Chang0928", "City")
 
 
 # 設定 Webhook 接收的路徑和 HTTP 方法
